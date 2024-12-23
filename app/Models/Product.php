@@ -6,5 +6,39 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    //
+    protected $fillable = [
+        'category_id',
+        'brand_id',
+        'name',
+        'slug',
+        'image',
+        'description',
+        'price',
+        'is_active',
+        'is_featured',
+        'in_stock',
+        'on_sale',
+    ];
+
+    //this because we have images as json in the database
+    protected $casts = [
+        'images' => 'array',
+    ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+   
 }
